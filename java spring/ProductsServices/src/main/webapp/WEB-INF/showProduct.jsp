@@ -12,16 +12,16 @@
 </head>
 <body>
 
-   <h1>${product.name}</h1>
+   <h1>${product1.name}</h1>
 
     <form:form action="/product/addCategory" method="POST"
         modelAttribute="relation">
-        <form:input type="hidden" path="product" value="${product.id}" />
+        <form:input type="hidden" path="product" value="${product1.id}" />
 
         <div>
             <form:select path="category">
-                <c:forEach items="${category}" var="p">
-                    <form:option value="${ p.id }">${ p.name }</form:option>
+                <c:forEach items="${category1}" var="c">
+                    <form:option value="${ c.id }">${ c.name }</form:option>
 
                 </c:forEach>
             </form:select>
@@ -32,7 +32,7 @@
 
 
     <h1>Categories</h1>
-    <c:forEach items="${product.categories}" var="p">
+    <c:forEach items="${product1.categories}" var="p">
         <ul>
 
             <li>${ p.name }</li>

@@ -46,6 +46,8 @@ public String createProduct(@Valid  @ModelAttribute("product") Product product ,
 	else 
 		
 		productserv.createProduct(product);
+	
+	
 return "redirect:/products/" + product.getId();
 		
 }
@@ -55,9 +57,9 @@ return "redirect:/products/" + product.getId();
 	
 	public String showProduct(Model model , @PathVariable("id") Long id, @ModelAttribute("relation") CategoryProduct relation  ){
 
-	model.addAttribute("product", productserv.findProduct(id) );
+	model.addAttribute("product1", productserv.findProduct(id) );
 
-	model.addAttribute("category", productserv.categoriesNotContainig(productserv.findProduct(id)));
+	model.addAttribute("category1", productserv.categoriesNotContainig(productserv.findProduct(id)));
 	
 	return "showProduct.jsp"; 	
 	
@@ -84,10 +86,10 @@ public String createCategory(@Valid  @ModelAttribute("category") Category catego
 
 
 @RequestMapping("/category/{id}")
-public String showCategory(Model model , @PathVariable("id") Long id ) {
+public String showCategory(Model model , @PathVariable("id") Long id , @ModelAttribute("relation") CategoryProduct relation) {
 	
-	model.addAttribute("category", productserv.findCategory(id) );
-	model.addAttribute("product", productserv.productsNotContainig(productserv.findCategory(id)) );
+	model.addAttribute("category2", productserv.findCategory(id) );
+	model.addAttribute("product2", productserv.productsNotContainig(productserv.findCategory(id)) );
 	return "showCategory.jsp";
 			
 	}
@@ -106,9 +108,28 @@ public String addrelation(@Valid @ModelAttribute("relation") CategoryProduct rel
 	return "redirect:/products/"+relation.getProduct().getId();
 		
 	
+}
+
+
+
+@PostMapping("/category/addProduct")
+
+public String addrelations(@Valid @ModelAttribute("relation") CategoryProduct relation, BindingResult result) {
+	
+	
+	if(result.hasErrors())
+		return "showCategory.jsp";
+				
+		else 
+			
+		productserv.createRelation(relation);
+	return "redirect:/category/"+relation.getCategory().getId();
+		
+	
 	
 	
 }
+
 
 
 
